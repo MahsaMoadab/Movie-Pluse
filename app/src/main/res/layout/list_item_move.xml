@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="190dp"
     android:layout_height="290dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="25dp"
     android:layout_marginTop="2dp"
-    android:layout_marginLeft="8dp">
+    android:layout_marginLeft="8dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="190dp"
@@ -14,7 +18,7 @@
         <ImageView
             android:id="@+id/img_movie"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="215dp"
             android:padding="0dp"
             android:src="@drawable/logo" />
 

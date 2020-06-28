@@ -3,6 +3,7 @@ package com.shariaty.movieplusetmdb.ui.home;
 
 import android.content.Context;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -44,6 +45,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 .centerCrop()
                 .placeholder(R.drawable.logo)
                 .into(holder.imgThumbnail);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -52,11 +59,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView mTitle,mYear;
         ImageView imgThumbnail;
+        CardView cardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mTitle=(TextView)itemView.findViewById(R.id.movie_title);
             mYear=(TextView)itemView.findViewById(R.id.movie_year);
             imgThumbnail=(ImageView) itemView.findViewById(R.id.img_movie);
+            cardView=(CardView) itemView.findViewById(R.id.card_view);
         }
     }
 }
