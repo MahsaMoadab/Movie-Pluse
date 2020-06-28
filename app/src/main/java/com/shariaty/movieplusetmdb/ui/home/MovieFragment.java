@@ -26,15 +26,20 @@ public class MovieFragment extends Fragment {
 
      RecyclerView rvPapularMovie;
      RecyclerView rvNowPlaying;
-     RecyclerView rvTopReted;
      ProgressBar progressBar;
-     List<Movie> movieList;
+     List<Movie> movieListPapular;
+    List<Movie> movieListNow;
      String partOfMovieURL;
      String URL;
      String imgURL="https://image.tmdb.org/t/p/w500/";
      String siteURL="https://api.themoviedb.org/3/movie/";
      String APIKey="?api_key=f0af1eac62e3efe5aeacec8754208a6e";
      RequestQueue requestQueue;
+     String title;
+     String year;
+     String thumbnail;
+     String description;
+     String coverPhoto;
      static final String TAG = MovieFragment.class.getSimpleName();
 
 
@@ -43,40 +48,33 @@ public class MovieFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         rvPapularMovie = root.findViewById(R.id.rv_papular_movie);
-        rvNowPlaying = root.findViewById(R.id.rv_NowPlaying);
-        rvTopReted = root.findViewById(R.id.rv_papular_movie);
+        rvNowPlaying=root.findViewById(R.id.rv_Now_Playing);
         progressBar=root.findViewById(R.id.progressBar);
         rvPapularMovie.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
         rvNowPlaying.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        rvTopReted.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        requestQueue = Volley.newRequestQueue(getActivity());
+        getDataNowPlaying();
         getDataPapularMovie();
-        getDataNowPlaying();
-        getDataNowPlaying();
         return root;
     }
 
 
-    private void ShowRvPapularMovie() {
-        //Show Recyclerview
-        MovieAdapter movieAdapter=new MovieAdapter(movieList,getActivity());
-        rvPapularMovie.setAdapter(movieAdapter);
-    }
+
+
+
+
+
     private void ShowRvNowPlaying() {
         //Show Recyclerview
-        MovieAdapter movieAdapter=new MovieAdapter(movieList,getActivity());
+        MovieAdapter movieAdapter=new MovieAdapter(movieListNow,getActivity());
         rvNowPlaying.setAdapter(movieAdapter);
     }
-    private void ShowRvTopReted() {
-        //Show Recyclerview
-        MovieAdapter movieAdapter=new MovieAdapter(movieList,getActivity());
-        rvTopReted.setAdapter(movieAdapter);
-    }
 
-    public void getDataPapularMovie() {
-        movieList = new ArrayList<>();
-        partOfMovieURL = "popular";
+    private void getDataNowPlaying() {
+        movieListNow = new ArrayList<>();
+        partOfMovieURL = "now_playing";
         URL = siteURL + partOfMovieURL + APIKey;
-        requestQueue = Volley.newRequestQueue(getActivity());
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -87,12 +85,59 @@ public class MovieFragment extends Fragment {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             try {
                                 JSONObject results = jsonArray.getJSONObject(i);
-                                String title = results.getString("title");
-                                String year = results.getString("release_date");
-                                String thumbnail = results.getString("poster_path");
-                                String description = results.getString("overview");
-                                String coverPhoto = results.getString("backdrop_path");
-                                movieList.add(new Movie(title, year, description, imgURL + thumbnail + APIKey, imgURL + thumbnail + APIKey, imgURL + coverPhoto + APIKey));
+                                 title = results.getString("title");
+                                 year = results.getString("release_date");
+                                 thumbnail = results.getString("poster_path");
+                                 description = results.getString("overview");
+                                 coverPhoto = results.getString("backdrop_path");
+                                movieListNow.add(new Movie(title, year, description, imgURL + thumbnail + APIKey, imgURL + thumbnail + APIKey, imgURL + coverPhoto + APIKey));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        ShowRvNowPlaying();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.VISIBLE);
+                error.printStackTrace();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+
+    }
+
+    private void ShowRvPapularMovie() {
+        //Show Recyclerview
+        MovieAdapter movieAdapter=new MovieAdapter(movieListPapular,getActivity());
+        rvPapularMovie.setAdapter(movieAdapter);
+    }
+    public void getDataPapularMovie() {
+        movieListPapular = new ArrayList<>();
+        partOfMovieURL = "popular";
+        URL = siteURL + partOfMovieURL + APIKey;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    progressBar.setVisibility(View.GONE);
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("results");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                JSONObject results = jsonArray.getJSONObject(i);
+                                 title = results.getString("title");
+                                 year = results.getString("release_date");
+                                 thumbnail = results.getString("poster_path");
+                                 description = results.getString("overview");
+                                 coverPhoto = results.getString("backdrop_path");
+                                movieListPapular.add(new Movie(title, year, description, imgURL + thumbnail + APIKey, imgURL + thumbnail + APIKey, imgURL + coverPhoto + APIKey));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -113,46 +158,4 @@ public class MovieFragment extends Fragment {
         requestQueue.add(jsonObjectRequest);
     }
 
-
-
-    public void getDataNowPlaying() {
-        movieList = new ArrayList<>();
-        partOfMovieURL = "popular";
-        URL = siteURL + partOfMovieURL + APIKey;
-        requestQueue = Volley.newRequestQueue(getActivity());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                if (response != null) {
-                    progressBar.setVisibility(View.GONE);
-                    try {
-                        JSONArray jsonArray = response.getJSONArray("results");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            try {
-                                JSONObject results = jsonArray.getJSONObject(i);
-                                String title = results.getString("title");
-                                String year = results.getString("release_date");
-                                String thumbnail = results.getString("poster_path");
-                                String description = results.getString("overview");
-                                String coverPhoto = results.getString("backdrop_path");
-                                movieList.add(new Movie(title, year, description, imgURL + thumbnail + APIKey, imgURL + thumbnail + APIKey, imgURL + coverPhoto + APIKey));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        ShowRvNowPlaying();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.VISIBLE);
-                error.printStackTrace();
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
-    }
 }
