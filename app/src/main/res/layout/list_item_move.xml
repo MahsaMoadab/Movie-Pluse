@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="225dp"
-    android:layout_height="340dp"
+    android:layout_width="190dp"
+    android:layout_height="290dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="25dp"
-    android:layout_margin="10dp">
+    android:layout_marginTop="2dp"
+    android:layout_marginLeft="8dp">
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="225dp"
-        android:layout_height="340dp">
+        android:layout_width="190dp"
+        android:layout_height="290dp">
 
         <ImageView
             android:id="@+id/img_movie"
             android:layout_width="match_parent"
-            android:layout_height="245dp"
+            android:layout_height="200dp"
             android:padding="0dp"
             android:src="@drawable/logo" />
 
@@ -27,7 +28,7 @@
             android:layout_marginRight="8dp"
             android:text="Movie Title"
             android:textColor="#000"
-            android:textSize="16dp"
+            android:textSize="12dp"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/movie_year"
@@ -38,6 +39,6 @@
             android:layout_marginTop="8dp"
             android:text="Production Year"
             android:textColor="#999"
-            android:textSize="14dp" />
+            android:textSize="12dp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
