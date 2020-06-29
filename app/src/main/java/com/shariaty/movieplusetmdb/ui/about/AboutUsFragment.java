@@ -1,9 +1,11 @@
 package com.shariaty.movieplusetmdb.ui.about;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,14 +18,9 @@ import com.shariaty.movieplusetmdb.R;
 
 public class AboutUsFragment extends Fragment {
 
-    private AboutUsViewModel aboutUsViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        aboutUsViewModel =
-                ViewModelProviders.of(this).get(AboutUsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_about_us, container, false);
-
         return root;
     }
 }

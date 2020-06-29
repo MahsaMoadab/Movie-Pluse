@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
@@ -62,12 +61,6 @@ public class MovieFragment extends Fragment implements MovieItemClickListener {
         getDataPapularMovie();
         return root;
     }
-
-
-
-
-
-
 
     private void ShowRvNowPlaying() {
         //Show Recyclerview
