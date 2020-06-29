@@ -1,9 +1,13 @@
 package com.shariaty.movieplusetmdb.ui.home;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.shariaty.movieplusetmdb.DetailMovie;
 import com.shariaty.movieplusetmdb.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieFragment extends Fragment {
+public class MovieFragment extends Fragment implements MovieItemClickListener {
 
      RecyclerView rvPapularMovie;
      RecyclerView rvNowPlaying;
@@ -66,7 +71,7 @@ public class MovieFragment extends Fragment {
 
     private void ShowRvNowPlaying() {
         //Show Recyclerview
-        MovieAdapter movieAdapter=new MovieAdapter(movieListNow,getActivity());
+        MovieAdapter movieAdapter=new MovieAdapter(movieListNow,getActivity(),this);
         rvNowPlaying.setAdapter(movieAdapter);
     }
 
@@ -114,7 +119,7 @@ public class MovieFragment extends Fragment {
 
     private void ShowRvPapularMovie() {
         //Show Recyclerview
-        MovieAdapter movieAdapter=new MovieAdapter(movieListPapular,getActivity());
+        MovieAdapter movieAdapter=new MovieAdapter(movieListPapular,getActivity(),this);
         rvPapularMovie.setAdapter(movieAdapter);
     }
     public void getDataPapularMovie() {
@@ -158,4 +163,16 @@ public class MovieFragment extends Fragment {
         requestQueue.add(jsonObjectRequest);
     }
 
+
+    @Override
+    public void onClickItem(Movie movie, ImageView imageView) {
+        Intent intent = new Intent(getActivity(), DetailMovie.class);
+        intent.putExtra("title", movie.getTitle());
+        intent.putExtra("year", movie.getYear());
+        intent.putExtra("overview", movie.getDescription());
+        intent.putExtra("imgThumbnail", movie.getThumbnail());
+        intent.putExtra("imgCover", movie.getCoverPhoto());
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), imageView, "sharedName");
+        startActivity(intent, options.toBundle());
+    }
 }

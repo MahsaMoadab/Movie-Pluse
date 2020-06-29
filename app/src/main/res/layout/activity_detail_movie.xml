@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailMovie">
+    tools:context=".DetailMovie"
+    android:orientation="vertical">
+    
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/img_cover"
-        android:src="@drawable/logo"
         android:layout_width="match_parent"
         android:layout_height="260dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        android:src="@drawable/logo"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintVertical_bias="0.0"></ImageView>
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/D_cardView"
         android:layout_width="120dp"
         android:layout_height="170dp"
         android:layout_marginStart="12dp"
@@ -34,16 +43,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.041">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/logo"
+            android:id="@+id/img_Thumbnail"/>
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/movie_title"
+        android:id="@+id/movie_Dtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/img_cover"
         android:layout_marginStart="150dp"
         android:layout_marginTop="56dp"
         android:text="Movie Title"
+        android:layout_marginEnd="10dp"
         android:textColor="#000"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -53,10 +68,10 @@
         app:layout_constraintTop_toBottomOf="@+id/img_cover" />
 
     <TextView
-        android:id="@+id/movie_year"
+        android:id="@+id/movie_Dyear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/movie_title"
+        android:layout_below="@id/movie_Dtitle"
         android:layout_marginStart="150dp"
         android:layout_marginTop="24dp"
         android:text="Production Year"
@@ -65,22 +80,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.006"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_title" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_Dtitle" />
 
     <TextView
+        android:id="@+id/movie_Detail"
         android:layout_width="362dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="31dp"
         android:text="Movie Detail"
+        android:scrollbars="vertical"
         android:textColor="#000"
         android:textSize="18dp"
         android:textStyle="bold"
+        android:paddingLeft="10dp"
+        android:paddingRight="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_year"
+        app:layout_constraintTop_toBottomOf="@+id/movie_Dyear"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
